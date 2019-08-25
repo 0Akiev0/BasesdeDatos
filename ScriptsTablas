@@ -1,1 +1,119 @@
+/*En algunos ids de puse el identity con el seed en diferente rango
+para ahorrarnos estar metiendo el id y para poder identificarlo
+"más fácil"
 
+1- Matricula
+10- Asignacion
+20- Carreras
+30- Estudiante
+40- Profesor
+50- Pago
+60- Desgloce Notas
+
+Como en realidad se van a hacer pocos insert, nos puede ayudar a no estar haciendo selects
+ni estar recordando como se componía una tabla (como yo lo veo)*/
+
+create database Matricuala_Universidad;
+use Matricuala_Universidad;
+
+create table Estudiante(
+idEstudiante int IDENTITY (30,1) primary key not null,
+nombre varchar(50) not null,
+apellidos varchar(50) not null,
+direccion varchar(100) not null,
+correo varchar(150) not null,
+);
+
+create table Profesores(
+idProfesor int IDENTITY (40,1) primary key not null,
+nombre varchar(50) not null,
+apellidos varchar(50) not null,
+direccion varchar(100) not null,
+correo varchar(150) not null
+);
+
+create table Curso(
+idCurso int primary key not null, 
+descripcion varchar(200) not null,
+costo money not null,
+requisito1 int,
+requisito2 int
+);
+
+create table Carreras(
+idCarrera int IDENTITY (20,1) primary key not null,
+descripcion varchar(50) not null
+)
+
+create table Horario(
+idHorario int primary key not null,
+dia char not null,
+horaEntrada varchar(30) not null,
+horaSalida varchar(30) not null
+);
+/*-----------------------------------------------------------*/
+
+create table DesgloceNotas (
+idEstado int primary key IDENTITY (60,1) not null,
+idEstudiante int not null,
+idCurso int not null,
+calificacion int,
+FOREIGN KEY(idEstudiante) REFERENCES Estudiante(idEstudiante),
+FOREIGN KEY(idCurso) REFERENCES Curso(idCurso)
+);
+
+create table Pago(
+idPago int primary key IDENTITY (50,1) not null,
+tipoPago varchar(50) not null,
+idEstudiante int not null, 
+idCurso int not null,
+total money not null,
+FOREIGN KEY(idEstudiante) REFERENCES Estudiante(idEstudiante),
+FOREIGN KEY(idCurso) REFERENCES Curso(idCurso)
+);
+
+create table Asignacion(
+idAsignacion int primary key IDENTITY (10,1) not null,
+idHorario int not null,
+idProfesor int not null,
+numAula int not null
+FOREIGN KEY(idHorario) REFERENCES Horario(idHorario),
+FOREIGN KEY(idProfesor) REFERENCES Profesores(idProfesor)
+);
+
+create table Matricula(
+idMatricula int primary key IDENTITY (1,1) not null,
+idCurso int not null,
+idEstudiante int not null,
+FOREIGN KEY(idCurso) REFERENCES Curso(idCurso),
+FOREIGN KEY(idEstudiante) REFERENCES Estudiante(idEstudiante)
+);
+
+/*---------------------------------*/
+create table Matricula_Cursos(
+idMatricula int not null,
+idCurso int not null,
+idAsignacion int not null,
+CONSTRAINT PK_MatriculaCurso PRIMARY KEY CLUSTERED (idMatricula asc, idCurso asc),
+FOREIGN KEY (idMatricula) references Matricula(idMatricula),
+FOREIGN KEY (idCurso) references Curso(idCurso),
+FOREIGN KEY (idAsignacion) references Asignacion (idAsignacion)
+);
+
+create table CarrerasCursos (
+idCarrera int not null,
+idCurso int not null,
+CONSTRAINT PK_CarreraCurso PRIMARY KEY CLUSTERED (idCarrera asc, idCurso asc),
+FOREIGN KEY (idCarrera) references Carreras(idCarrera),
+FOREIGN KEY (idCurso) references Curso(idCurso)
+);
+
+create table EstudiantesCarreras (
+idEstudiante int not null,
+idCarrera int not null,
+CONSTRAINT PK_EstudianteCarrera PRIMARY KEY CLUSTERED (idCarrera asc, idEstudiante asc),
+FOREIGN KEY (idCarrera) references Carreras(idCarrera),
+FOREIGN KEY(idEstudiante) REFERENCES Estudiante(idEstudiante)
+);
+
+/*--------------inserts-------------------*/
