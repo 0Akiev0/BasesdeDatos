@@ -99,6 +99,13 @@ insert into Horario values(12, 'V', '6pm', '9pm');
 insert into Horario values(13, 'S', '8am', '11am');
 insert into Horario values(14, 'S', '12pm', '3pm');
 
+/*Aquí se hizo la tabla Asignacion para poder tener una tabla
+muchos a muchos*/
+create table Asignacion(
+idAsignacion int IDENTITY (20,1) primary key not null
+);
+
+
 /*-----------------------------------------------------------*/
 
 create table DesgloceNotas (
@@ -131,8 +138,10 @@ FOREIGN KEY(idEstudiante) REFERENCES Estudiante(idEstudiante),
 FOREIGN KEY(idCurso) REFERENCES Curso(idCurso)
 );
 
-create table Asignacion(
-idAsignacion int primary key IDENTITY (10,1) not null,
+/*Con la tabla clase se pueden agregar los horarios,
+profesores y aulas a la matricula en cuestion*/
+create table Clase(
+idClase int primary key IDENTITY (10,1) not null,
 idHorario int not null,
 idProfesor int not null,
 numAula int not null
@@ -149,15 +158,6 @@ FOREIGN KEY(idEstudiante) REFERENCES Estudiante(idEstudiante)
 );
 
 /*---------------------------------*/
-create table Matricula_Cursos(
-idMatricula int not null,
-idCurso int not null,
-idAsignacion int not null,
-CONSTRAINT PK_MatriculaCurso PRIMARY KEY CLUSTERED (idMatricula asc, idCurso asc),
-FOREIGN KEY (idMatricula) references Matricula(idMatricula),
-FOREIGN KEY (idCurso) references Curso(idCurso),
-FOREIGN KEY (idAsignacion) references Asignacion (idAsignacion)
-);
 
 create table CarrerasCursos (
 idCarrera int not null,
@@ -190,5 +190,27 @@ insert into EstudiantesCarreras values (31, 20);
 insert into EstudiantesCarreras values (32, 20);
 insert into EstudiantesCarreras values (39, 21);
 
-/*--------------inserts-------------------*/
 
+/*Aqui ya se pueden combinar la matricula en cuestion
+con su grupo de clase respectivo y se le asigna un numero
+de Asignacion para que se puedan llamar a los datos que almacena*/
+create table AsignacionClase(
+idAsignacion int not null,
+idClase int not null,
+idMatricula int not null,
+CONSTRAINT PK_AsignacionClase PRIMARY KEY CLUSTERED (idAsignacion asc, idClase asc),
+FOREIGN KEY (idAsignacion) references Asignacion(idAsignacion),
+FOREIGN KEY(idClase) REFERENCES Clase(idClase),
+FOREIGN KEY(idMatricula) REFERENCES Matricula(idMatricula)
+);
+
+/*--------------desechos-------------------*/
+/*drop table Matricula_Cursos(
+idMatricula int not null,
+idCurso int not null,
+idAsignacion int not null,
+CONSTRAINT PK_MatriculaCurso PRIMARY KEY CLUSTERED (idMatricula asc, idCurso asc),
+FOREIGN KEY (idMatricula) references Matricula(idMatricula),
+FOREIGN KEY (idCurso) references Curso(idCurso),
+FOREIGN KEY (idAsignacion) references Asignacion (idAsignacion)
+);*/
