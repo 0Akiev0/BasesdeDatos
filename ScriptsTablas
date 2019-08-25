@@ -24,6 +24,18 @@ direccion varchar(100) not null,
 correo varchar(150) not null,
 );
 
+insert into Estudiante values ('Joel', 'Piedra Lobo', 'San José, San Rafael', 'jPiedra@mail.com');-- 30
+insert into Estudiante values ('Karia', 'Rivera Castro', 'San José, Moravia', 'kRivera@mail.com');-- 31
+insert into Estudiante values ('Gerardo', 'Tencio Deer', 'San José, Coronado', 'gTencio@mail.com');-- 32
+insert into Estudiante values ('Francisco', 'Quiros Arroyo', 'San José, Montes de Oca', 'jQuiros@mail.com');-- 33
+insert into Estudiante values ('Diego', 'Soto Soto', 'San José, Alajuelita', 'dSoto@mail.com');-- 34
+insert into Estudiante values ('Mary', 'Lobo Lobo', 'San José, Zapote', 'mLobo@mail.com');-- 35
+insert into Estudiante values ('Hazel', 'Artavia Piedra', 'Cartago, Occidental', 'hArtavia@mail.com');-- 36
+insert into Estudiante values ('Yulian', 'Meza Meza', 'San José, San Sebastián', 'yHazel@mail.com');-- 37
+insert into Estudiante values ('Francinie', 'Tenorio Trejos', 'Heredia, Ulloa', 'fTenorio@mail.com');-- 38
+insert into Estudiante values ('Rodrigo', 'Gomez Fritz', 'Alajuela, San Carlos', 'rGomez@mail.com');-- 39
+
+
 create table Profesores(
 idProfesor int IDENTITY (40,1) primary key not null,
 nombre varchar(50) not null,
@@ -31,6 +43,13 @@ apellidos varchar(50) not null,
 direccion varchar(100) not null,
 correo varchar(150) not null
 );
+
+insert into Profesores values ('Fernando', 'Rios Rios', 'San José, Desamparados', 'fRios@mail.com');--40
+insert into Profesores values ('Yessenia', 'Rojas Rojas', 'Heredia, Ulloa ', 'yRojas@mail.com');--41
+insert into Profesores values ('Dania', 'Lopez Lopez', 'San José, Hatillo', 'dLopez@mail.com');--42
+insert into Profesores values ('Carlos', 'Saborio Rios', 'San José, Montes de Oca', 'cSaborio@mail.com');--43
+insert into Profesores values ('William', 'Zamora Smith', 'Heredia, Belén', 'wZamora@mail.com');--44
+insert into Profesores values ('Roger', 'Garita Solano', 'Heredia, Belén', 'rGarita@mail.com');--45
 
 create table Curso(
 idCurso int primary key not null, 
@@ -40,10 +59,23 @@ requisito1 int,
 requisito2 int
 );
 
+insert into Curso values (1001, 'Introduccion a la programacion', 110000, null, null);--1000 para progra
+insert into Curso values (1002, 'Programacion 1', 120000, 1001, null);
+insert into Curso values (1003, 'Programacion 2', 120000, 1002, null);
+insert into Curso values (1101, 'Desarrollo Web', 125000, 1002, null);-- 1100 para web
+insert into Curso values (1501, 'Introducion al calculo', 80000, null, null);-- 1500 para calculo
+insert into Curso values (1502, 'Calculo 1', 85000, 1501, null);
+insert into Curso values (1601, 'Redes', 125000, 1002, 1502);-- 1600 para redes
+insert into Curso values (2601, 'Termodinámica', 100000, null, null);-- 2600 para termo
+insert into Curso values (2602, 'Termodinámica 2', 115000, 2601, null);
+
 create table Carreras(
 idCarrera int IDENTITY (20,1) primary key not null,
 descripcion varchar(50) not null
 )
+
+insert into Carreras values ('Ingeniería en Sistemas');--20
+insert into Carreras values ('Ingeniería Mecánica');--21
 
 create table Horario(
 idHorario int primary key not null,
@@ -51,6 +83,22 @@ dia char not null,
 horaEntrada varchar(30) not null,
 horaSalida varchar(30) not null
 );
+
+insert into Horario values(1, 'L', '8am', '11am');
+insert into Horario values(2, 'L', '12pm', '3pm');
+insert into Horario values(3, 'L', '4pm', '7pm');
+insert into Horario values(4, 'K', '9am', '12pm');
+insert into Horario values(5, 'K', '2pm', '5am');
+insert into Horario values(6, 'K', '6pm', '9pm');
+insert into Horario values(7, 'M', '9am', '12pm');
+insert into Horario values(8, 'M', '2pm', '5pm');
+insert into Horario values(9, 'M', '6pm', '9pm');
+insert into Horario values(10, 'J', '2pm', '5pm');
+insert into Horario values(11, 'J', '6pm', '9pm');
+insert into Horario values(12, 'V', '6pm', '9pm');
+insert into Horario values(13, 'S', '8am', '11am');
+insert into Horario values(14, 'S', '12pm', '3pm');
+
 /*-----------------------------------------------------------*/
 
 create table DesgloceNotas (
@@ -61,6 +109,17 @@ calificacion int,
 FOREIGN KEY(idEstudiante) REFERENCES Estudiante(idEstudiante),
 FOREIGN KEY(idCurso) REFERENCES Curso(idCurso)
 );
+
+insert into DesgloceNotas values (30, 1001, 85);
+insert into DesgloceNotas values (30, 1501, 70);
+insert into DesgloceNotas values (31, 1001, 83);
+insert into DesgloceNotas values (31, 1002, 71);
+insert into DesgloceNotas values (31, 1501, 90);
+insert into DesgloceNotas values (31, 1502, 89);
+insert into DesgloceNotas values (39, 2601, 88);
+insert into DesgloceNotas values (39, 1001, 85);
+insert into DesgloceNotas values (32, 1501, 80);
+
 
 create table Pago(
 idPago int primary key IDENTITY (50,1) not null,
@@ -108,6 +167,16 @@ FOREIGN KEY (idCarrera) references Carreras(idCarrera),
 FOREIGN KEY (idCurso) references Curso(idCurso)
 );
 
+insert into CarrerasCursos values (20, 1001);
+insert into CarrerasCursos values (20, 1002);
+insert into CarrerasCursos values (20, 1003);
+insert into CarrerasCursos values (20, 1101);
+insert into CarrerasCursos values (20, 1501);
+insert into CarrerasCursos values (20, 1502);
+insert into CarrerasCursos values (20, 1601);
+insert into CarrerasCursos values (21, 2601);
+insert into CarrerasCursos values (21, 2602);
+
 create table EstudiantesCarreras (
 idEstudiante int not null,
 idCarrera int not null,
@@ -116,4 +185,10 @@ FOREIGN KEY (idCarrera) references Carreras(idCarrera),
 FOREIGN KEY(idEstudiante) REFERENCES Estudiante(idEstudiante)
 );
 
+insert into EstudiantesCarreras values (30, 20);
+insert into EstudiantesCarreras values (31, 20);
+insert into EstudiantesCarreras values (32, 20);
+insert into EstudiantesCarreras values (39, 21);
+
 /*--------------inserts-------------------*/
+
