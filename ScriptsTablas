@@ -19,6 +19,7 @@ insert into Estudiante values (7,'Hazel', 'Artavia Piedra', 'Cartago, Occidental
 insert into Estudiante values (8,'Yulian', 'Meza Meza', 'San José, San Sebastián', 'yHazel@mail.com');-- 37
 insert into Estudiante values (9,'Francinie', 'Tenorio Trejos', 'Heredia, Ulloa', 'fTenorio@mail.com');-- 38
 insert into Estudiante values (10,'Rodrigo', 'Gomez Fritz', 'Alajuela, San Carlos', 'rGomez@mail.com');-- 39
+insert into Estudiante values (11,'Rodrigo', 'Gomez Fritz', 'Alajuela, San Carlos', 'rGomez@mail.com');-- 39
 
 create table Profesores(
 idProfesor int primary key not null,
